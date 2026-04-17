@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudentFinance - Финансовый помощник студента</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f2f5;
+            color: #1a1a2e;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: #1a1a2e;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .logo i {
+            color: #00d2ff;
+            margin-right: 10px;
+        }
+
+        .logo .accent {
+            color: #00d2ff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #00d2ff;
+        }
+
+        .menu-btn {
+            display: none;
+            font-size: 1.8rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight {
+            color: #00d2ff;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 12px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #00d2ff;
+            color: #1a1a2e;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid #00d2ff;
+        }
+
+        /* Section Header */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #1a1a2e;
+        }
+
+        /* Calculators */
+        .calculators {
+            padding: 5rem 0;
+        }
+
+        .calculators-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.8rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: #00d2ff;
+            margin-bottom: 1rem;
+        }
+
+        .calculator-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+
+
+n-bottom: 0.3rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 1rem;
+        }
+
+        .btn-calc {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #00d2ff, #0077ff);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+
+        .result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f8f9ff;
+            border-radius: 12px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .result span {
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        /* Budget Planner */
+        .budget-planner {
+            background: #1a1a2e;
+            padding: 5rem 0;
+        }
+
+        .budget-planner .section-header h2,
+        .budget-planner .section-header p {
+            color: white;
+        }
+
+        .budget-wrapper {
+            background: white;
+            border-radius: 30px;
+            padding: 2rem;
+        }
+
+        .budget-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .budget-form-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .budget-form-group input,
+        .budget-form-group select {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+        }
+
+        .btn-small {
+            background: #00d2ff;
+            border: none;
+            padding: 0 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .budget-list {
+            list-style: none;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .budget-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .budget-list li button {
+            background: none;
+            border: none;
+            color: #ff4757;
+            cursor: pointer;
+        }
+
+        .budget-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: #f8f9ff;
+            padding: 1.2rem;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .stat-card i {
+            font-size: 2rem;
+        }
+
+        .income-stat i { color: #2ecc71; }
+        .expense-stat i { color: #ff4757; }
+        .balance-stat i { color: #00d2ff; }
+
+        .stat-amount {
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .btn-reset {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Tips */
+        .tips {
+            padding: 5rem 0;
+            background: #f8f9ff;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tip {
+            background: white;
+            padding: 1.8rem;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .tip i {
+            font-size: 2.5rem;
+            color: #00d2ff;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            dis
+
+
+play: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid #333;
+            color: #aaa;
+        }
+
+        /* Responsive */
+        max-width: 768px {
+            .nav-links {
+                display: none;
+            }
+            .menu-btn {
+                display: block;
+            }
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            .budget-inputs {
+                grid-template-columns: 1fr;
+            }
+            .budget-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <nav>
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Student<span class="accent">Finance</span></span>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="#home">Главная</a>
+                <a href="#calculators">Калькуляторы</a>
+                <a href="#budget">Бюджет</a>
+                <a href="#tips">Советы</a>
+            </div>
+            <div class="menu-btn" id="menuBtn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<section id="home" class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Управляй финансами <span class="highlight">как профессионал</span></h1>
+            <p>Специально для студентов: планируй бюджет, копи на мечту и будь финансово независимым</p>
+            <div class="hero-buttons">
+                <a href="#calculators" class="btn-primary">Начать расчеты</a>
+                <a href="#tips" class="btn-secondary">Получить советы</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="calculators" class="calculators">
+    <div class="container">
+        <div class="section-header">
+            <h2>Финансовые калькуляторы</h2>
+            <p>Выбери нужный инструмент и получи точный расчет</p>
+        </div>
+        <div class="calculators-grid">
+            
+            <div class="calculator-card">
+                <div class="card-icon"><i class="fas fa-wallet"></i></div>
+                <h3>Бюджет месяца</h3>
+                <div class="input-group">
+                    <label>Доходы (₽)</label>
+                    <input type="number" id="incomeBudget" value="25000">
+                </div>
+                <div class="input-group">
+                    <label>Расходы (₽)</label>
+                    <input type="number" id="expensesBudget" value="18000">
+                </div>
+                <button class="btn-calc" onclick="calcBudget()">Рассчитать</button>
+                <div class="result" id="budgetResult">
+                    <i class="fas fa-chart-line"></i>
+                    <span id="budgetAmount">0 ₽</span>
+                </div>
+            </div>
+
+            <div class="calculator-card">
+                <div class="card-icon"><i class="fas fa-piggy-bank"></i></div>
+                <h3>Накопления</h3>
+                <div class="input-group">
+                    <label>Цель (₽)</label>
+                    <input type="number" id="savingsTarget" value="50000">
+                </div>
+                <div class="input-group">
+                    <label>Ежемесячный взнос (₽)</label>
+                    <input type="number" id="monthlySave" value="5000">
+                </div>
+                <button class="btn-calc" onclick="calcSavings()">Рассчитать</button>
+                <div class="result" id="savingsResult">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span id="savingsMonths">0</span> месяцев
+                </div>
+            </div>
+
+            <div class="calculator-card">
+                <div class="card-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                <h3>Кредитный калькулятор</h3>
+
+
+<div class="input-group">
+                    <label>Сумма кредита (₽)</label>
+                    <input type="number" id="loanAmount" value="100000">
+                </div>
+                <div class="input-group">
+                    <label>Процент (% годовых)</label>
+                    <input type="number" id="loanRate" value="15">
+                </div>
+                <div class="input-group">
+                    <label>Срок (месяцев)</label>
+                    <input type="number" id="loanTerm" value="12">
+                </div>
+                <button class="btn-calc" onclick="calcLoan()">Рассчитать</button>
+                <div class="result" id="loanResult">
+                    <i class="fas fa-credit-card"></i>
+                    <span id="monthlyPayment">0 ₽</span>
+                </div>
+            </div>
+
+            <div class="calculator-card">
+                <div class="card-icon"><i class="fas fa-briefcase"></i></div>
+                <h3>Окупаемость подработки</h3>
+                <div class="input-group">
+                    <label>Часовая ставка (₽)</label>
+                    <input type="number" id="hourlyRate" value="300">
+                </div>
+                <div class="input-group">
+                    <label>Дорога (часов в день)</label>
+                    <input type="number" id="travelTime" value="2">
+                </div>
+                <div class="input-group">
+                    <label>Рабочих дней в месяц</label>
+                    <input type="number" id="workDays" value="20">
+                </div>
+                <button class="btn-calc" onclick="calcJob()">Рассчитать</button>
+                <div class="result" id="jobResult">
+                    <i class="fas fa-clock"></i>
+                    <span id="effectiveRate">0 ₽/час</span>
+                </div>
+            </div>
+
+            <div class="calculator-card">
+                <div class="card-icon"><i class="fas fa-university"></i></div>
+                <h3>Стоимость обучения</h3>
+                <div class="input-group">
+                    <label>Стоимость семестра (₽)</label>
+                    <input type="number" id="semesterCost" value="60000">
+                </div>
+                <div class="input-group">
+                    <label>Месяцев в семестре</label>
+                    <input type="number" id="monthsSemester" value="5">
+                </div>
+                <button class="btn-calc" onclick="calcStudy()">Рассчитать</button>
+                <div class="result" id="studyResult">
+                    <i class="fas fa-chart-simple"></i>
+                    <span id="monthlyStudy">0 ₽</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="budget" class="budget-planner">
+    <div class="container">
+        <div class="section-header">
+            <h2>Планировщик бюджета</h2>
+            <p>Добавляй доходы и расходы, следи за балансом</p>
+        </div>
+        <div class="budget-wrapper">
+            <div class="budget-inputs">
+                <div class="income-section">
+                    <h3><i class="fas fa-plus-circle"></i> Доходы</h3>
+                    <div class="budget-form-group">
+                        <input type="text" id="incomeDesc" placeholder="Источник дохода">
+                        <input type="number" id="incomeAmount" placeholder="Сумма">
+                        <button class="btn-small" onclick="addIncome()">+ Добавить</button>
+                    </div>
+                    <ul id="incomeList" class="budget-list"></ul>
+                </div>
+                <div class="expense-section">
+                    <h3><i class="fas fa-minus-circle"></i> Расходы</h3>
+                    <div class="budget-form-group">
+                        <select id="expenseCategory">
+                            <option value="Еда">🍔 Еда</option>
+                            <option value="Транспорт">🚌 Транспорт</option>
+                            <option value="Жилье">🏠 Жилье</option>
+                            <option value="Учеба">📚 Учеба</o
+
+
+ption>
+                            <option value="Развлечения">🎮 Развлечения</option>
+                            <option value="Другое">📌 Другое</option>
+                        </select>
+                        <input type="number" id="expenseAmount" placeholder="Сумма">
+                        <button class="btn-small" onclick="addExpense()">+ Добавить</button>
+                    </div>
+                    <ul id="expenseList" class="budget-list"></ul>
+                </div>
+            </div>
+            <div class="budget-stats">
+                <div class="stat-card income-stat">
+                    <i class="fas fa-arrow-up"></i>
+                    <h4>Всего доходов</h4>
+                    <div class="stat-amount" id="totalIncome">0 ₽</div>
+                </div>
+                <div class="stat-card expense-stat">
+                    <i class="fas fa-arrow-down"></i>
+                    <h4>Всего расходов</h4>
+                    <div class="stat-amount" id="totalExpense">0 ₽</div>
+                </div>
+                <div class="stat-card balance-stat">
+                    <i class="fas fa-scale-balanced"></i>
+                    <h4>Баланс</h4>
+                    <div class="stat-amount" id="balance">0 ₽</div>
+                </div>
+            </div>
+            <div class="budget-actions">
+                <button class="btn-reset" onclick="resetBudget()">Сбросить все</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="tips" class="tips">
+    <div class="container">
+        <div class="section-header">
+            <h2>Финансовые советы для студентов</h2>
+            <p>Простые правила, которые помогут сэкономить</p>
+        </div>
+        <div class="tips-grid">
+            <div class="tip"><i class="fas fa-coffee"></i><h4>Кофе с собой</h4><p>Экономия до 3000₽ в месяц</p></div>
+            <div class="tip"><i class="fas fa-train"></i><h4>Студенческий проездной</h4><p>Экономия на транспорте до 50%</p></div>
+            <div class="tip"><i class="fas fa-book"></i><h4>Б/у учебники</h4><p>Дешевле в 3 раза</p></div>
+            <div class="tip"><i class="fas fa-percent"></i><h4>Скидки по студенческому</h4><p>Магазины и кафе дают до 20%</p></div>
+            <div class="tip"><i class="fas fa-utensils"></i><h4>Готовь сам</h4><p>Доставка обходится в 2-3 раза дороже</p></div>
+            <div class="tip"><i class="fas fa-mobile-alt"></i><h4>Кешбэк-сервисы</h4><p>Возвращай до 30% от покупок</p></div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>StudentFinance</span>
+                <p>Финансовая грамотность для каждого студента</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 StudentFinance — Все права защищены</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // ============= ВСЕ ФУНКЦИИ ОБЪЯВЛЕНЫ ЗДЕСЬ =============
+    
+    // Мобильное меню
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinksMenu = document.getElementById('navLinks');
+    if (menuBtn) {
+        menuBtn.onclick = function() {
+            if (navLinksMenu.style.display === 'flex') {
+                navLinksMenu.style.display = 'none';
+            } else {
+                navLinksMenu.style.display = 'flex';
+            }
+        };
+    }
+
+    // Калькулятор бюджета
+    window.calcBudget = function() {
+        const income = parseFloat(document.getElementById('incomeBudget').value) || 0;
+        const expenses = parseFloat(document.getElementById('expensesBudget').value) || 0;
+        const result = income - expenses;
+        const span = document.getElementById('budgetAmount');
+        if (span) {
+            span.textContent = result.toLocaleString('ru-RU') + ' ₽';
+            span.style.color = result < 0 ? '#ff4757' : '#2ecc71';
+        }
+        document.getElementById('budgetResult').style.display = 'flex';
+    };
+
+    // Калькулятор накоплений
+    window.calcSavi
+
+
+ngs = function() {
+        const target = parseFloat(document.getElementById('savingsTarget').value) || 0;
+        const monthly = parseFloat(document.getElementById('monthlySave').value) || 0;
+        const span = document.getElementById('savingsMonths');
+        if (span) {
+            if (monthly <= 0) span.textContent = '∞';
+            else span.textContent = Math.ceil(target / monthly);
+        }
+        document.getElementById('savingsResult').style.display = 'flex';
+    };
+
+    // Кредитный калькулятор
+    window.calcLoan = function() {
+        const amount = parseFloat(document.getElementById('loanAmount').value) || 0;
+        const rate = parseFloat(document.getElementById('loanRate').value) || 0;
+        const months = parseInt(document.getElementById('loanTerm').value) || 1;
+        const monthlyRate = rate / 100 / 12;
+        let payment = 0;
+        if (monthlyRate === 0) payment = amount / months;
+        else payment = amount * monthlyRate * Math.pow(1 + monthlyRate, months) / (Math.pow(1 + monthlyRate, months) - 1);
+        document.getElementById('monthlyPayment').textContent = Math.round(payment).toLocaleString('ru-RU') + ' ₽';
+        document.getElementById('loanResult').style.display = 'flex';
+    };
+
+    // Калькулятор подработки
+    window.calcJob = function() {
+        const hourlyRate = parseFloat(document.getElementById('hourlyRate').value) || 0;
+        const travelTime = parseFloat(document.getElementById('travelTime').value) || 0;
+        const workDays = parseFloat(document.getElementById('workDays').value) || 0;
+        const totalHours = workDays * 8;
+        const travelHours = travelTime * workDays;
+        const effectiveRate = (hourlyRate * totalHours) / (totalHours + travelHours);
+        document.getElementById('effectiveRate').textContent = Math.round(effectiveRate).toLocaleString('ru-RU') + ' ₽/час';
+        document.getElementById('jobResult').style.display = 'flex';
+    };
+
+    // Калькулятор обучения
+    window.calcStudy = function() {
+        const semesterCost = parseFloat(document.getElementById('semesterCost').value) || 0;
+        const months = parseFloat(document.getElementById('monthsSemester').value) || 1;
+        const monthlyPayment = semesterCost / months;
+        document.getElementById('monthlyStudy').textContent = Math.round(monthlyPayment).toLocaleString('ru-RU') + ' ₽';
+        document.getElementById('studyResult').style.display = 'flex';
+    };
+
+    // ============= BUDGET PLANNER =============
+    let incomes = [];
+    let expenses = [];
+
+    window.addIncome = function() {
+        const desc = document.getElementById('incomeDesc').value;
+        const amount = parseFloat(document.getElementById('incomeAmount').value);
+        if (desc && amount > 0) {
+            incomes.push({ desc, amount });
+            updateIncomeList();
+            updateTotals();
+            document.getElementById('incomeDesc').value = '';
+            document.getElementById('incomeAmount').value = '';
+        } else {
+            alert('Введите описание и сумму дохода');
+        }
+    };
+
+    window.addExpense = function() {
+        const category = document.getElementById('expenseCategory').value;
+        const amount = parseFloat(document.getElementById('expenseAmount').value);
+        if (amount > 0) {
+            expenses.push({ category, amount });
+            updateExpenseList();
+            updateTotals();
+            document.getElementById('expenseAmount').value = '';
+        } else {
+            alert('Введите сумму расхода');
+        }
+    };
+
+    function updateIncomeList() {
+        const list = document.getElementById('incomeList');
+        if (!list) return;
+        list.innerHTML = '';
+        if (incomes.length === 0) {
+            list.innerHTML = '<li style="color:#999">Нет доходов</li>';
+            return;
+        }
+        incomes.forEach((inc, idx) => {
+            const li = document.createElement('li');
+            li.innerHTML = `<span>${inc.desc}</span><span>${inc.amount.toLocaleString('ru-RU')} ₽ <button onclick="removeIncome(${idx})"><i class="fas fa-tra
+
+
+sh"></i></button></span>`;
+            list.appendChild(li);
+        });
+    }
+
+    function updateExpenseList() {
+        const list = document.getElementById('expenseList');
+        if (!list) return;
+        list.innerHTML = '';
+        if (expenses.length === 0) {
+            list.innerHTML = '<li style="color:#999">Нет расходов</li>';
+            return;
+        }
+        expenses.forEach((exp, idx) => {
+            const li = document.createElement('li');
+            li.innerHTML = `<span>${exp.category}</span><span>${exp.amount.toLocaleString('ru-RU')} ₽ <button onclick="removeExpense(${idx})"><i class="fas fa-trash"></i></button></span>`;
+            list.appendChild(li);
+        });
+    }
+
+    window.removeIncome = function(index) {
+        incomes.splice(index, 1);
+        updateIncomeList();
+        updateTotals();
+    };
+
+    window.removeExpense = function(index) {
+        expenses.splice(index, 1);
+        updateExpenseList();
+        updateTotals();
+    };
+
+    function updateTotals() {
+        const totalIncome = incomes.reduce((sum, i) => sum + i.amount, 0);
+        const totalExpense = expenses.reduce((sum, e) => sum + e.amount, 0);
+        const balance = totalIncome - totalExpense;
+        document.getElementById('totalIncome').textContent = totalIncome.toLocaleString('ru-RU') + ' ₽';
+        document.getElementById('totalExpense').textContent = totalExpense.toLocaleString('ru-RU') + ' ₽';
+        const balanceSpan = document.getElementById('balance');
+        balanceSpan.textContent = balance.toLocaleString('ru-RU') + ' ₽';
+        balanceSpan.style.color = balance < 0 ? '#ff4757' : '#2ecc71';
+    }
+
+    window.resetBudget = function() {
+        incomes = [];
+        expenses = [];
+        updateIncomeList();
+        updateExpenseList();
+        updateTotals();
+    };
+
+    // Инициализация
+    updateIncomeList();
+    updateExpenseList();
+    updateTotals();
+</script>
+
+</body>
+</html> margi
